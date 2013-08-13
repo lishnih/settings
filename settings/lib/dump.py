@@ -9,6 +9,12 @@ try:    from .backwardcompat import *
 except: from backwardcompat import *
 
 
+""" Отладочный вывод переменных
+plain_type возвращает тип объекта
+plain      вывод переменной
+"""
+
+
 def plain_type(obj):
     buf = unicode(type(obj)).replace("'", "").replace("type ", "")\
           .replace("class ", "").replace("<", "[").replace(">", "]")
@@ -16,9 +22,11 @@ def plain_type(obj):
 
 
 def plain(obj, level=0):
-    wrap = " " * 4 * level
+    if level > 2:
+        return repr(obj)
 
     buf = ""
+    wrap = " " * 4 * level
 
     if obj is None:
         buf = "None"
@@ -61,7 +69,8 @@ def plain(obj, level=0):
 
     if isinstance(obj, dict):
         buf += "{\n"
-        for key, val in obj.items():
+        for key in sorted(obj.keys()):
+            val = obj[key]
             buf += wrap + "    {0:16}: {1}\n".format(key, plain(val, level+1))
         buf += wrap + "}"
         return buf
@@ -69,8 +78,8 @@ def plain(obj, level=0):
     buf += "{0}{{\n".format(plain_type(obj))
     for key in dir(obj):
         try:                   val = getattr(obj, key)
-        except Exception as e: val = "*** {0} ***".format(plain_type(e))
+        except Exception as e: val = "*** {0} ***".format(e)
         if key[0:2] != '__' and not callable(val):
             buf += wrap + "    {0:16}: {1}\n".format(key, plain(val, level+1))
-    buf += wrap + "}"
+    buf += wrap + "}}"
     return buf

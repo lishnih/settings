@@ -28,6 +28,10 @@ if sys.version_info >= (3,):
     from tkinter.messagebox import (showinfo, showwarning, showerror,
          askquestion, askokcancel, askyesno, askretrycancel)
 
+    class aStr():
+        def __str__(self):
+            return self.__unicode__()
+
     def cmp(a, b):
         return (a > b) - (a < b)
 
@@ -53,6 +57,8 @@ if sys.version_info >= (3,):
     numeric_types = int, float, complex
     simple_types = int, float, complex, str, bytearray
     collections_types = list, tuple, set, frozenset
+    all_types = (int, float, complex, str, bytearray,
+                 list, tuple, set, frozenset, dict)
 
 else:
     from urllib2 import URLError, HTTPError
@@ -72,6 +78,10 @@ else:
     from tkFileDialog import askopenfilename, asksaveasfilename
     from tkMessageBox import (showinfo, showwarning, showerror,
          askquestion, askokcancel, askyesno, askretrycancel)
+
+    class aStr():
+        def __str__(self):
+            return self.__unicode__().encode('utf-8')
 
 #   cmp = cmp
     range = xrange
@@ -95,3 +105,5 @@ else:
     numeric_types = int, long, float, complex
     simple_types = int, long, float, complex, basestring, bytearray
     collections_types = list, tuple, set, frozenset
+    all_types = (int, long, float, complex, basestring, bytearray,
+                 list, tuple, set, frozenset, dict)

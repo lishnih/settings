@@ -23,28 +23,28 @@ except IOError:
 install_requires = [
     ]
 
-from settings.lib.info import __version__
+from tksettings.lib.info import __version__
 
 if __name__ == '__main__':
     setup(
-        name = 'settings',
+        name = 'tksettings',
         version = __version__,
         author = 'Stan',
         author_email = 'lishnih@gmail.com',
         url = 'http://github.com/lishnih/settings',
-        packages = ['settings', 'settings/lib'],
+        packages = ['tksettings', 'tksettings/lib'],
         scripts = [
             'scripts/run_settings.py',
         ],
-        package_data = dict(settings=[]),
-        description = 'Pickle Settings',
+        package_data = dict(tksettings=[]),
+        description = 'A simple pickle settings module with Tk-based tools.',
         long_description = __doc__,
         platforms = 'any',
         license = 'Public Domain',
-        keywords = ['Pickle', 'Settings'],
+        keywords = ['Pickle', 'Settings', 'Tk'],
         install_requires = install_requires,
         classifiers = [
-            'Development Status :: 4 - Beta',
+            'Development Status :: 3 - Alpha',
             'Intended Audience :: Developers',
             'License :: Public Domain',
             'Operating System :: OS Independent',

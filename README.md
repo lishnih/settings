@@ -1,4 +1,4 @@
 settings
 ========
 
-Pickle settings
+A simple pickle settings module.

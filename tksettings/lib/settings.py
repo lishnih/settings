@@ -55,17 +55,17 @@ class SettingsGroup(object):
         self.system.filename = filename
 
         if not os.path.exists(filename):
-            self.error("{0} not exists!".format(filename))
+            logging.warning("{0} not exists!".format(filename))
             return
         if not os.path.isfile(filename):
-            self.error("{0} must be a file!".format(filename))
+            logging.error("{0} must be a file!".format(filename))
             return
 
         try:
             with open(filename, 'rb') as f:
                 self.settings = pickle.load(f)
         except Exception as e:
-            self.error("Unable to read/parse file: {0} [{1}]".format(filename, e))
+            logging.error("Unable to read/parse file: {0} [{1}]".format(filename, e))
 
 
     def save(self):
@@ -77,12 +77,7 @@ class SettingsGroup(object):
             with open(self.system.filename, 'wb') as f:
                 pickle.dump(self.settings, f, 2)
         except pickle.PicklingError as e:
-            self.error("Unable to write file: {0} [{1}]".format(self.system.filename, e))
-
-
-    def error(self, error):
-        self.error = error
-        logging.error(error)
+            logging.error("Unable to write file: {0} [{1}]".format(self.system.filename, e))
 
 
     def get_dict(self):
@@ -123,6 +118,11 @@ class SettingsGroup(object):
         if key in self.settings:
             del self.settings[key]
             self.system.flush()
+
+
+    def clean(self):
+        self.settings = {}
+        self.system.flush()
 
 
     def parse(self, value):

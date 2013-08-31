@@ -13,36 +13,39 @@ else:
     if py_version < (2, 6):
         raise RuntimeError('On Python 2, Index requires Python 2.6 or better')
 
-here = os.path.abspath(os.path.dirname(__file__))
+here = os.path.abspath(os.path.dirname(os.path.abspath(__file__)))
 try:
     README = open(os.path.join(here, 'README.md')).read()
     CHANGES = open(os.path.join(here, 'CHANGES.txt')).read()
 except IOError:
     README = CHANGES = ''
 
-install_requires = [
-    ]
 
-from tksettings.lib.info import __version__
+from tksettings.lib.info import __pkgname__, __description__, __version__
+
 
 if __name__ == '__main__':
     setup(
-        name = 'tksettings',
+        name = __pkgname__,
+        description = __description__,
         version = __version__,
+        long_description = __doc__,
+
         author = 'Stan',
         author_email = 'lishnih@gmail.com',
         url = 'http://github.com/lishnih/settings',
-        packages = ['tksettings', 'tksettings/lib'],
+        license = 'Public Domain',
+        platforms = 'any',
+        keywords = ['Pickle', 'Settings', 'Tk'],
+
+        packages = [__pkgname__, __pkgname__+'/lib'],
+        package_data = {__pkgname__: []},
         scripts = [
             'scripts/run_settings.py',
         ],
-        package_data = dict(tksettings=[]),
-        description = 'A simple pickle settings module with Tk-based tools.',
-        long_description = __doc__,
-        platforms = 'any',
-        license = 'Public Domain',
-        keywords = ['Pickle', 'Settings', 'Tk'],
-        install_requires = install_requires,
+        install_requires = [
+        ],
+
         classifiers = [
             'Development Status :: 3 - Alpha',
             'Intended Audience :: Developers',
